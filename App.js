@@ -1,6 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { FlatList, StyleSheet, View, SafeAreaView } from "react-native";
+import { FlatList, StyleSheet, View, SafeAreaView, Alert } from "react-native";
+import uuid from "react-native-uuid";
+import AddTodo from "./components/AddTodo";
 
 // components
 import Header from "./components/Header";
@@ -27,12 +29,24 @@ export default function App() {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.key !== key));
   };
 
+  const addTodo = (text) => {
+    if (text.length > 3) {
+      const newTodo = {
+        key: uuid.v4(),
+        text,
+      };
+      setTodos((prevTodos) => [newTodo, ...prevTodos]);
+    } else {
+      Alert.alert("OOPS!", "Todos must be at least 3 charaters long");
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <Header />
         <View style={styles.content}>
-          {/* todo form */}
+          <AddTodo addTodo={addTodo} />
           <View>
             <FlatList
               data={todos}
