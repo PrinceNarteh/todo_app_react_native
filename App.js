@@ -1,6 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { FlatList, StyleSheet, View, SafeAreaView, Alert } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  SafeAreaView,
+  Alert,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import uuid from "react-native-uuid";
 import AddTodo from "./components/AddTodo";
 
@@ -43,21 +51,27 @@ export default function App() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <Header />
-        <View style={styles.content}>
-          <AddTodo addTodo={addTodo} />
-          <View>
-            <FlatList
-              data={todos}
-              renderItem={({ item }) => (
-                <TodoItem item={item} pressHandler={pressHandler} />
-              )}
-            />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}
+      >
+        <View style={styles.container}>
+          <Header />
+          <View style={styles.content}>
+            <AddTodo addTodo={addTodo} />
+            <View>
+              <FlatList
+                data={todos}
+                renderItem={({ item }) => (
+                  <TodoItem item={item} pressHandler={pressHandler} />
+                )}
+              />
+            </View>
           </View>
+          <StatusBar style="auto" />
         </View>
-        <StatusBar style="auto" />
-      </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }
@@ -68,9 +82,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   content: {
+    flex: 1,
     padding: 40,
   },
   list: {
+    flex: 1,
     marginTop: 20,
   },
 });

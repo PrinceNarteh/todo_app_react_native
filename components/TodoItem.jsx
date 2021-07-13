@@ -1,16 +1,19 @@
-import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Entypo } from "@expo/vector-icons";
 
-const TodoItem = ({item, pressHandler}) => {
-  
+const TodoItem = ({ item, pressHandler }) => {
   return (
     <TouchableOpacity onPress={() => pressHandler(item.key)}>
-      <Text style={styles.item}>{item.text}</Text>
+      <View style={styles.item}>
+        <Entypo name="trash" size={16} color="black" />
+        <Text style={styles.text}>{item.text}</Text>
+      </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-export default TodoItem
+export default TodoItem;
 
 const styles = StyleSheet.create({
   item: {
@@ -18,7 +21,12 @@ const styles = StyleSheet.create({
     marginTop: 16,
     borderColor: "#bbb",
     borderWidth: 1,
-    borderStyle: 'dashed',
-    borderRadius: 10
-  }
-})
+    borderStyle: "dashed",
+    borderRadius: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  text: {
+    marginLeft: 5,
+  },
+});
